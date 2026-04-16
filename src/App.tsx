@@ -14,6 +14,7 @@ import StudentResults from "./pages/StudentResults";
 import StudentFinancials from "./pages/StudentFinancials";
 import ExamTimetable from "./pages/ExamTimetable";
 import ELearning from "./pages/ELearning";
+import ClassTimetable from "./pages/ClassTimetable";
 import SchoolCalendar from "./pages/SchoolCalendar";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminResults from "./pages/AdminResults";
