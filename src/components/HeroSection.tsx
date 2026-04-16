@@ -31,9 +31,9 @@ const HeroSection = () => {
             character development, and holistic growth for every child.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link to="/student-login">
+            <Link to="/login">
               <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-bold text-base px-8">
-                Student Portal <ArrowRight className="ml-2 w-4 h-4" />
+                Access Portals <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
             <a href="#admissions">

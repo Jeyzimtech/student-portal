@@ -34,14 +34,9 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <Link to="/student-login">
-            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-              Student Portal
-            </Button>
-          </Link>
-          <Link to="/admin-login">
-            <Button size="sm" variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-              Admin Login
+          <Link to="/login">
+            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-6">
+              Portal Login
             </Button>
           </Link>
         </div>
@@ -63,11 +58,8 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <Link to="/student-login" onClick={() => setIsOpen(false)}>
-            <Button size="sm" className="w-full bg-primary text-primary-foreground">Student Portal</Button>
-          </Link>
-          <Link to="/admin-login" onClick={() => setIsOpen(false)}>
-            <Button size="sm" variant="outline" className="w-full border-primary text-primary">Admin Login</Button>
+          <Link to="/login" onClick={() => setIsOpen(false)}>
+            <Button size="sm" className="w-full bg-primary text-primary-foreground font-bold">Portal Login</Button>
           </Link>
         </div>
       )}

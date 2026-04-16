@@ -187,39 +187,58 @@ const AdminStudents = () => {
     <DashboardLayout type="admin" title="Manage Students">
       {/* Summary Cards */}
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <Card className="border-border">
-          <CardContent className="p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Users className="w-5 h-5 text-primary" />
-            </div>
+        <Card className="border-border px-4 py-3 bg-primary/5">
+          <div className="flex items-center gap-3">
+            <Users className="w-5 h-5 text-primary" />
             <div>
-              <div className="text-2xl font-heading font-black text-foreground">{students.length}</div>
-              <div className="text-xs text-muted-foreground">Total Students</div>
+              <div className="text-xl font-heading font-black">{students.length}</div>
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Total Enrolled</div>
             </div>
-          </CardContent>
+          </div>
         </Card>
-        <Card className="border-border">
-          <CardContent className="p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 text-green-500" />
-            </div>
+        <Card className="border-border px-4 py-3 bg-green-500/5">
+          <div className="flex items-center gap-3">
+            <GraduationCap className="w-5 h-5 text-green-500" />
             <div>
-              <div className="text-2xl font-heading font-black text-foreground">{activeCount}</div>
-              <div className="text-xs text-muted-foreground">Active</div>
+              <div className="text-xl font-heading font-black">{activeCount}</div>
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Active Members</div>
             </div>
-          </CardContent>
+          </div>
         </Card>
-        <Card className="border-border">
-          <CardContent className="p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
-              <Users className="w-5 h-5 text-orange-500" />
-            </div>
+        <Card className="border-border px-4 py-3 bg-orange-500/5">
+          <div className="flex items-center gap-3">
+            <Users className="w-5 h-5 text-orange-500" />
             <div>
-              <div className="text-2xl font-heading font-black text-foreground">{inactiveCount}</div>
-              <div className="text-xs text-muted-foreground">Inactive</div>
+              <div className="text-xl font-heading font-black">{inactiveCount}</div>
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Inactive/Pending</div>
             </div>
-          </CardContent>
+          </div>
         </Card>
+      </div>
+      
+      {/* Class Overview / Class Selector */}
+      <div className="mb-6 overflow-x-auto pb-2">
+        <div className="flex gap-4 min-w-max">
+          {["Grade 1", "Grade 2", "Grade 3", "Grade 4", "Grade 5", "Grade 6", "Grade 7"].map((gradePrefix) => {
+            const count = students.filter(s => s.grade.startsWith(gradePrefix)).length;
+            const isActive = filterGrade.startsWith(gradePrefix);
+            return (
+              <button
+                key={gradePrefix}
+                onClick={() => setFilterGrade(isActive ? "all" : `${gradePrefix}A`)}
+                className={`p-3 rounded-xl border transition-all flex flex-col items-center gap-1 min-w-[100px] ${
+                  isActive 
+                    ? "bg-primary border-primary text-primary-foreground shadow-md scale-105" 
+                    : "bg-card border-border text-foreground hover:bg-muted"
+                }`}
+              >
+                <GraduationCap className={`w-5 h-5 ${isActive ? "text-primary-foreground" : "text-primary"}`} />
+                <span className="text-xs font-bold">{gradePrefix}</span>
+                <span className={`text-[10px] opacity-70 ${isActive ? "text-primary-foreground" : ""}`}>{count} Students</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Search, Filters, and Add Button */}

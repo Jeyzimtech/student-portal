@@ -14,6 +14,7 @@ const studentLinks = [
   { label: "Exam Timetable", href: "/student-dashboard/exam-timetable", icon: Calendar },
   { label: "Class Timetable", href: "/student-dashboard/class-timetable", icon: Clock },
   { label: "E-Learning", href: "/student-dashboard/elearning", icon: BookOpen },
+  { label: "School Calendar", href: "/student-dashboard/calendar", icon: Calendar },
 ];
 
 const adminLinks = [
@@ -24,6 +25,7 @@ const adminLinks = [
   { label: "Exam Timetable", href: "/admin/exam-timetable", icon: Calendar },
   { label: "Class Timetable", href: "/admin/class-timetable", icon: Clock },
   { label: "E-Learning", href: "/admin/elearning", icon: BookOpen },
+  { label: "School Calendar", href: "/admin/calendar", icon: Calendar },
 ];
 
 const teacherLinks = [
@@ -34,6 +36,7 @@ const teacherLinks = [
   { label: "Exam Timetable", href: "/teacher/exam-timetable", icon: Calendar },
   { label: "Class Timetable", href: "/teacher/class-timetable", icon: Clock },
   { label: "E-Learning", href: "/teacher/elearning", icon: BookOpen },
+  { label: "School Calendar", href: "/teacher/calendar", icon: Calendar },
 ];
 
 const sidebarThemes = {
