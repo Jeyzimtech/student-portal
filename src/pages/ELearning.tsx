@@ -21,6 +21,7 @@ interface Course {
   description: string | null;
   total_lessons: number;
   progress?: number;
+  thumbnail?: string;
 }
 
 interface CourseDocument {
@@ -192,9 +193,15 @@ const ELearning = ({ type = "student" }: { type?: "student" | "admin" | "teacher
             <Card key={course.id} className="border-border hover:shadow-lg transition-shadow group">
               <CardContent className="p-4 md:p-6">
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                    <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  </div>
+                  {course.thumbnail ? (
+                    <div className="w-16 h-10 md:w-20 md:h-12 rounded-lg overflow-hidden border border-border shadow-sm group-hover:scale-105 transition-transform">
+                      <img src={course.thumbnail} alt={course.subject} className="w-full h-full object-cover" />
+                    </div>
+                  ) : (
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                    </div>
+                  )}
                   <Badge variant="outline" className="bg-muted text-muted-foreground text-[10px] md:text-xs">{course.total_lessons} lessons</Badge>
                 </div>
                 <h3 className="font-heading font-bold text-base md:text-lg text-foreground mb-1">{course.subject}</h3>

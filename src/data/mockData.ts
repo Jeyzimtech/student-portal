@@ -284,6 +284,7 @@ export interface MockCourse {
   total_lessons: number;
   grade: string;
   progress?: number;
+  thumbnail?: string;
 }
 
 export const MOCK_COURSES: MockCourse[] = [
@@ -295,6 +296,7 @@ export const MOCK_COURSES: MockCourse[] = [
     total_lessons: 24,
     grade: "Grade 7A",
     progress: 72,
+    thumbnail: "/thumbnails/math.png",
   },
   {
     id: "course-eng-7",
@@ -313,6 +315,17 @@ export const MOCK_COURSES: MockCourse[] = [
     total_lessons: 18,
     grade: "Grade 7A",
     progress: 85,
+    thumbnail: "/thumbnails/shona.png",
+  },
+  {
+    id: "course-heritage-7",
+    subject: "Heritage Studies",
+    title: "Grade 7 Heritage Studies",
+    description: "Learning about the rich history and culture of Zimbabwe, from Great Zimbabwe to the modern flag.",
+    total_lessons: 15,
+    grade: "Grade 7A",
+    progress: 30,
+    thumbnail: "/thumbnails/heritage.png",
   },
   {
     id: "course-sci-7",
@@ -349,6 +362,7 @@ export const MOCK_COURSES: MockCourse[] = [
     total_lessons: 15,
     grade: "Grade 5A",
     progress: 40,
+    thumbnail: "/thumbnails/math.png",
   },
   {
     id: "course-eng-5",
@@ -358,6 +372,16 @@ export const MOCK_COURSES: MockCourse[] = [
     total_lessons: 12,
     grade: "Grade 5A",
     progress: 65,
+  },
+  {
+    id: "course-heritage-5",
+    subject: "Heritage Studies",
+    title: "Grade 5 Heritage Studies",
+    description: "Introduction to Zimbabwean heritage and cultural values.",
+    total_lessons: 10,
+    grade: "Grade 5A",
+    progress: 50,
+    thumbnail: "/thumbnails/heritage.png",
   },
 ];
 
@@ -401,6 +425,11 @@ export const MOCK_DOCUMENTS: MockDocument[] = [
   { name: "Zimbabwe_History_Chapter1.pdf", fullPath: "courses/course-ss-7/Zimbabwe_History_Chapter1.pdf", size: 580000, contentType: "application/pdf", timeCreated: "2026-01-17T08:00:00Z", courseId: "course-ss-7" },
   { name: "Map_Reading_Skills.pdf", fullPath: "courses/course-ss-7/Map_Reading_Skills.pdf", size: 490000, contentType: "application/pdf", timeCreated: "2026-01-24T08:00:00Z", courseId: "course-ss-7" },
   { name: "Civic_Education_Notes.pdf", fullPath: "courses/course-ss-7/Civic_Education_Notes.pdf", size: 260000, contentType: "application/pdf", timeCreated: "2026-02-06T08:00:00Z", courseId: "course-ss-7" },
+  
+  // Heritage Studies
+  { name: "Zimbabwe_National_Anthem_Lyrics.pdf", fullPath: "courses/course-heritage-7/National_Anthem.pdf", size: 124000, contentType: "application/pdf", timeCreated: "2026-01-10T08:00:00Z", courseId: "course-heritage-7" },
+  { name: "Great_Zimbabwe_History.pdf", fullPath: "courses/course-heritage-7/Great_Zimbabwe.pdf", size: 854000, contentType: "application/pdf", timeCreated: "2026-01-15T08:00:00Z", courseId: "course-heritage-7" },
+  { name: "Heritage_Values_Intro.pdf", fullPath: "courses/course-heritage-5/Values_Intro.pdf", size: 312000, contentType: "application/pdf", timeCreated: "2026-02-01T08:00:00Z", courseId: "course-heritage-5" },
 ];
 
 // ─── Helper: get documents by course ID ──────────────────────────────────────
