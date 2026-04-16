@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchCollection, addDocument } from "@/integrations/firebase/firestore";
 import { getMockStudentsByGrade } from "@/data/mockData";
+import { Printer } from "lucide-react";
 
 interface Student {
   id: string;
@@ -49,6 +50,10 @@ const AdminResults = () => {
       // Stay with mock
     });
   }, [selectedClass]);
+
+  const handlePrint = () => {
+    window.print();
+  };
 
   const getGrade = (mark: number): string => {
     if (mark >= 80) return "1";
@@ -97,7 +102,22 @@ const AdminResults = () => {
 
   return (
     <DashboardLayout type="admin" title="Upload Results">
-      <Card className="border-border mb-6">
+      <div className="flex justify-end mb-4 no-print">
+        <Button onClick={handlePrint} variant="outline" className="gap-2 bg-card border-border hover:bg-muted font-bold text-xs">
+          <Printer className="w-4 h-4" /> Print Mark Sheet (PDF)
+        </Button>
+      </div>
+
+      <div className="print-only text-center mb-10 border-b pb-6">
+        <h1 className="text-3xl font-black font-heading text-primary uppercase tracking-widest">CABS Primary School</h1>
+        <p className="text-sm font-bold opacity-60">Internal Mark Recording Sheet — 2026</p>
+        <div className="mt-4 flex justify-center gap-10">
+          <p className="text-sm"><strong>Class:</strong> {selectedClass || "____________"}</p>
+          <p className="text-sm"><strong>Subject:</strong> {selectedSubject || "____________"}</p>
+        </div>
+      </div>
+
+      <Card className="border-border mb-6 no-print">
         <CardHeader><CardTitle className="font-heading">Select Class & Subject</CardTitle></CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
@@ -133,7 +153,7 @@ const AdminResults = () => {
                       <TableHead>Student ID</TableHead>
                       <TableHead>Name</TableHead>
                       <TableHead>Mark (%)</TableHead>
-                      <TableHead>Comment</TableHead>
+                      <TableHead className="no-print">Comment</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -142,16 +162,17 @@ const AdminResults = () => {
                         <TableCell className="font-medium">{s.student_id}</TableCell>
                         <TableCell>{s.full_name}</TableCell>
                         <TableCell>
-                          <Input type="number" className="w-20" placeholder="0-100" value={marks[s.id] || ""} onChange={(e) => setMarks((p) => ({ ...p, [s.id]: e.target.value }))} />
+                          <div className="print-only font-bold">{marks[s.id] || "____"}</div>
+                          <Input type="number" className="w-20 no-print" placeholder="0-100" value={marks[s.id] || ""} onChange={(e) => setMarks((p) => ({ ...p, [s.id]: e.target.value }))} />
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="no-print">
                           <Input placeholder="Optional" className="w-48" value={comments[s.id] || ""} onChange={(e) => setComments((p) => ({ ...p, [s.id]: e.target.value }))} />
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
-                <div className="mt-6 flex justify-end">
+                <div className="mt-6 flex justify-end no-print">
                   <Button onClick={handleSubmit} disabled={saving} className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-8">
                     {saving ? "Saving..." : "Save Results"}
                   </Button>
