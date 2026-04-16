@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#1a3a2a"/>
+  <g transform="translate(32, 28)">
+    <!-- Graduation cap top -->
+    <polygon points="0,-14 20,0 0,6 -20,0" fill="#d4a017"/>
+    <!-- Cap body shadow -->
+    <polygon points="0,-14 20,0 0,6 -20,0" fill="#d4a017" opacity="0.9"/>
+    <!-- Tassel line -->
+    <line x1="0" y1="-14" x2="-8" y2="2" stroke="#d4a017" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="-8" cy="4" r="2.5" fill="#d4a017"/>
+    <!-- Base band -->
+    <path d="M-14,2 L-14,10 Q0,18 14,10 L14,2 Q0,10 -14,2Z" fill="#2d5a3d"/>
+    <path d="M-14,2 L-14,10 Q0,18 14,10 L14,2 Q0,10 -14,2Z" fill="#d4a017" opacity="0.15"/>
+  </g>
+  <!-- Subtle shine -->
+  <rect x="0" y="0" width="64" height="32" rx="14" fill="url(#shine)"/>
+  <defs>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="white" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>

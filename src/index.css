@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 45 33% 97%;
+    --foreground: 160 30% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 30% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 30% 10%;
+
+    --primary: 153 60% 32%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 42 90% 55%;
+    --secondary-foreground: 160 30% 10%;
+
+    --muted: 45 20% 92%;
+    --muted-foreground: 160 10% 45%;
+
+    --accent: 14 80% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 45 15% 88%;
+    --input: 45 15% 88%;
+    --ring: 153 60% 32%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 153 40% 15%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 42 90% 55%;
+    --sidebar-primary-foreground: 160 30% 10%;
+    --sidebar-accent: 153 30% 22%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 153 25% 25%;
+    --sidebar-ring: 42 90% 55%;
+
+    --font-heading: 'Nunito', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+
+    --gradient-hero: linear-gradient(135deg, hsl(153 60% 32%), hsl(153 40% 22%));
+    --gradient-gold: linear-gradient(135deg, hsl(42 90% 55%), hsl(30 85% 50%));
+    --gradient-warm: linear-gradient(135deg, hsl(45 33% 97%), hsl(42 30% 92%));
+  }
+
+  .dark {
+    --background: 160 30% 6%;
+    --foreground: 45 20% 95%;
+    --card: 160 25% 10%;
+    --card-foreground: 45 20% 95%;
+    --popover: 160 25% 10%;
+    --popover-foreground: 45 20% 95%;
+    --primary: 153 55% 45%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 42 80% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 160 15% 15%;
+    --muted-foreground: 45 10% 60%;
+    --accent: 14 70% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 160 15% 18%;
+    --input: 160 15% 18%;
+    --ring: 153 55% 45%;
+    --sidebar-background: 160 30% 6%;
+    --sidebar-foreground: 45 20% 95%;
+    --sidebar-primary: 42 80% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 160 20% 12%;
+    --sidebar-accent-foreground: 45 20% 95%;
+    --sidebar-border: 160 15% 18%;
+    --sidebar-ring: 42 80% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+@layer utilities {
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  .gradient-gold {
+    background: var(--gradient-gold);
+  }
+  .gradient-warm {
+    background: var(--gradient-warm);
+  }
+}
