@@ -57,17 +57,25 @@ const ELearning = ({ type = "student" }: { type?: "student" | "admin" | "teacher
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    // Load mock courses immediately for instant feedback
+    setCourses(MOCK_COURSES.map((c) => ({ ...c, progress: c.progress ?? Math.floor(Math.random() * 100) })));
+
+    // Try background sync with Firestore
     fetchCollection<Course>("elearning_courses").then((data) => {
       if (data.length > 0) {
         setCourses(data.map((c) => ({ ...c, progress: Math.floor(Math.random() * 100) })));
-      } else {
-        // Fallback to mock courses
-        setCourses(MOCK_COURSES.map((c) => ({ ...c, progress: c.progress ?? Math.floor(Math.random() * 100) })));
       }
+    }).catch(() => {
+      // Keep mock data if fetch fails
+      console.log("Using e-learning mock data (sync bypassed)");
     });
   }, []);
 
   const fetchDocuments = async (courseId: string) => {
+    // Show mock documents immediately
+    const mock = getMockDocumentsByCourse(courseId);
+    setDocuments(mock);
+    
     setLoadingDocs(true);
     try {
       const folderRef = ref(storage, `courses/${courseId}`);
@@ -83,15 +91,13 @@ const ELearning = ({ type = "student" }: { type?: "student" | "admin" | "teacher
           timeCreated: meta.timeCreated,
         });
       }
+      
+      // If we found real documents, update the state
       if (docs.length > 0) {
         setDocuments(docs);
-      } else {
-        // Fallback to mock documents
-        setDocuments(getMockDocumentsByCourse(courseId));
       }
-    } catch {
-      // Fallback to mock documents
-      setDocuments(getMockDocumentsByCourse(courseId));
+    } catch (err) {
+      console.log("Using mock documents for course", courseId);
     }
     setLoadingDocs(false);
   };
