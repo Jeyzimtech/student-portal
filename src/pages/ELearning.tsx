@@ -219,10 +219,10 @@ const ELearning = ({ type = "student" }: { type?: "student" | "admin" | "teacher
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <Button size="sm" className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 text-xs md:text-sm"><Play className="w-3 h-3 mr-1" /> Continue</Button>
+                  <Button className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 text-xs md:text-sm h-9 px-3"><Play className="w-3 h-3 mr-1" /> Continue</Button>
                   <Dialog>
                     <DialogTrigger asChild>
-                      <Button size="sm" variant="outline" className="border-border text-foreground text-xs md:text-sm" onClick={() => handleCourseSelect(course)}>
+                      <Button variant="outline" className="border-border text-foreground text-xs md:text-sm h-9 px-3" onClick={() => handleCourseSelect(course)}>
                         <FileText className="w-3 h-3 mr-1" /> Materials
                       </Button>
                     </DialogTrigger>

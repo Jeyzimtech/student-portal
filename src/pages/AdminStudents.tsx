@@ -325,10 +325,10 @@ const AdminStudents = () => {
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex gap-1 justify-end md:opacity-0 md:group-hover:opacity-100 transition-opacity">
-                          <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => openViewDialog(s)} title="View Details">
+                          <Button variant="ghost" className="h-8 w-8 p-0" onClick={() => openViewDialog(s)} title="View Details">
                             <Eye className="w-3.5 h-3.5" />
                           </Button>
-                          <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => openEditDialog(s)} title="Edit Student">
+                          <Button variant="ghost" className="h-8 w-8 p-0" onClick={() => openEditDialog(s)} title="Edit Student">
                             <Pencil className="w-3.5 h-3.5" />
                           </Button>
                           <AlertDialog>
@@ -367,7 +367,7 @@ const AdminStudents = () => {
                     Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, filtered.length)} of {filtered.length}
                   </span>
                   <div className="flex gap-1">
-                    <Button size="icon" variant="outline" className="h-8 w-8" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>
+                    <Button variant="outline" className="h-8 w-8 p-0" disabled={currentPage === 1} onClick={() => setCurrentPage(p => p - 1)}>
                       <ChevronLeft className="w-4 h-4" />
                     </Button>
                     {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
@@ -377,12 +377,12 @@ const AdminStudents = () => {
                       else if (currentPage >= totalPages - 2) { page = totalPages - 4 + i; }
                       else { page = currentPage - 2 + i; }
                       return (
-                        <Button key={page} size="icon" variant={page === currentPage ? "default" : "outline"} className="h-8 w-8 text-xs" onClick={() => setCurrentPage(page)}>
+                        <Button key={page} variant={page === currentPage ? "default" : "outline"} className="h-8 w-8 text-xs p-0" onClick={() => setCurrentPage(page)}>
                           {page}
                         </Button>
                       );
                     })}
-                    <Button size="icon" variant="outline" className="h-8 w-8" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>
+                    <Button variant="outline" className="h-8 w-8 p-0" disabled={currentPage === totalPages} onClick={() => setCurrentPage(p => p + 1)}>
                       <ChevronRight className="w-4 h-4" />
                     </Button>
                   </div>
