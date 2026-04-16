@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { fetchCollection } from "@/integrations/firebase/firestore";
 import { getMockTimetableByGrade } from "@/data/mockData";
-import { Filter } from "lucide-react";
+import { Filter, Printer } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 const grades = ["Grade 1A", "Grade 2A", "Grade 3A", "Grade 4A", "Grade 5A", "Grade 6A", "Grade 7A"];
@@ -40,6 +41,10 @@ const ClassTimetable = ({ type = "student" }: { type?: "student" | "admin" | "te
     loadTimetable(selectedGrade);
   }, [selectedGrade]);
 
+  const handleDownloadPDF = () => {
+    window.print();
+  };
+
   const periods = [...new Set(entries.map((e) => e.period_number))].sort((a,b) => a-b);
 
   const getSubject = (day: string, period: number) => {
@@ -52,7 +57,10 @@ const ClassTimetable = ({ type = "student" }: { type?: "student" | "admin" | "te
 
   return (
     <DashboardLayout type={type} title="Class Timetable">
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-between items-center mb-4 no-print">
+        <Button onClick={handleDownloadPDF} variant="outline" className="gap-2 bg-card border-border hover:bg-muted font-bold text-xs">
+          <Printer className="w-4 h-4" /> Download Timetable (PDF)
+        </Button>
         <Select value={selectedGrade} onValueChange={setSelectedGrade}>
           <SelectTrigger className="w-48 bg-card border-border">
             <Filter className="w-3 h-3 mr-2" />
@@ -62,6 +70,12 @@ const ClassTimetable = ({ type = "student" }: { type?: "student" | "admin" | "te
             {grades.map(g => <SelectItem key={g} value={g}>{g}</SelectItem>)}
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="print-only text-center mb-10 border-b pb-6">
+        <h1 className="text-3xl font-black font-heading text-primary uppercase tracking-widest">CABS Primary School</h1>
+        <p className="text-sm font-bold opacity-60">Official Weekly Class Timetable — 2026</p>
+        <p className="text-lg font-bold mt-2 text-primary">{selectedGrade}</p>
       </div>
 
       <Card className="border-border">

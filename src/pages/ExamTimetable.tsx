@@ -5,7 +5,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { fetchCollection } from "@/integrations/firebase/firestore";
 import { MOCK_EXAMS } from "@/data/mockData";
-import { Filter } from "lucide-react";
+import { Filter, Printer } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Exam {
   exam_date: string;
@@ -35,11 +36,18 @@ const ExamTimetable = ({ type = "student" }: { type?: "student" | "admin" | "tea
     }).catch(() => {});
   }, []);
 
+  const handleDownloadPDF = () => {
+    window.print();
+  };
+
   const filteredExams = exams.filter(e => !e.grade || e.grade.startsWith(selectedGrade) || selectedGrade === "all");
 
   return (
     <DashboardLayout type={type} title="Exam Timetable">
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-between items-center mb-4 no-print">
+        <Button onClick={handleDownloadPDF} variant="outline" className="gap-2 bg-card border-border hover:bg-muted font-bold text-xs">
+          <Printer className="w-4 h-4" /> Download Schedule (PDF)
+        </Button>
         <Select value={selectedGrade} onValueChange={setSelectedGrade}>
           <SelectTrigger className="w-48 bg-card border-border">
             <Filter className="w-3 h-3 mr-2" />
@@ -49,6 +57,12 @@ const ExamTimetable = ({ type = "student" }: { type?: "student" | "admin" | "tea
             {grades.map(g => <SelectItem key={g} value={g}>{g}</SelectItem>)}
           </SelectContent>
         </Select>
+      </div>
+
+      <div className="print-only text-center mb-10 border-b pb-6">
+        <h1 className="text-3xl font-black font-heading text-primary uppercase tracking-widest">CABS Primary School</h1>
+        <p className="text-sm font-bold opacity-60">Official Examination Timetable — 2026</p>
+        <p className="text-lg font-bold mt-2 text-primary">{selectedGrade}</p>
       </div>
 
       <Card className="border-border">

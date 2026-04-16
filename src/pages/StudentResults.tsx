@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchCollection } from "@/integrations/firebase/firestore";
 import { getMockResultsByStudent } from "@/data/mockData";
+import { Button } from "@/components/ui/button";
+import { Printer } from "lucide-react";
 
 interface Result {
   subject: string;
@@ -17,6 +19,7 @@ interface Result {
 }
 
 const getGradeColor = (grade: string) => {
+  if (!grade) return "";
   const g = parseInt(grade);
   if (g <= 2) return "bg-primary/15 text-primary border-primary/30";
   if (g <= 4) return "bg-secondary/15 text-secondary-foreground border-secondary/30";
@@ -51,6 +54,10 @@ const StudentResults = () => {
     loadRealResults();
   }, [studentRecord]);
 
+  const handleDownloadPDF = () => {
+    window.print();
+  };
+
   // Calculate average
   const average = results.length > 0
     ? Math.round(results.reduce((sum, r) => sum + r.mark, 0) / results.length)
@@ -58,6 +65,25 @@ const StudentResults = () => {
 
   return (
     <DashboardLayout type="student" title="My Results">
+      <div className="flex justify-start mb-4 no-print">
+        <Button onClick={handleDownloadPDF} variant="outline" className="gap-2 bg-card border-border hover:bg-muted font-bold text-xs">
+          <Printer className="w-4 h-4" /> Download Report (PDF)
+        </Button>
+      </div>
+      
+      <div className="print-only text-center mb-10 border-b pb-6">
+        <h1 className="text-3xl font-black font-heading text-primary uppercase tracking-widest">CABS Primary School</h1>
+        <p className="text-sm font-bold opacity-60">Professional Student Termly Report</p>
+        <div className="mt-4 grid grid-cols-2 text-left bg-muted/30 p-4 rounded-xl max-w-md mx-auto">
+          <div className="text-xs uppercase tracking-tighter opacity-70">Student Name:</div>
+          <div className="text-sm font-bold">{studentRecord?.full_name}</div>
+          <div className="text-xs uppercase tracking-tighter opacity-70">Grade:</div>
+          <div className="text-sm font-bold">{studentRecord?.grade}</div>
+          <div className="text-xs uppercase tracking-tighter opacity-70">Term:</div>
+          <div className="text-sm font-bold">Term 1 — 2026</div>
+        </div>
+      </div>
+
       <Card className="border-border">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="font-heading">Term 1 — 2026 Results</CardTitle>

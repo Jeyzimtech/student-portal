@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar as CalendarIcon, Clock, MapPin, Bell, Info, Landmark } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar as CalendarIcon, Clock, MapPin, Bell, Info, Landmark, Printer } from "lucide-react";
 
 interface CalendarEvent {
   id: string;
@@ -39,109 +40,94 @@ const calendarEvents: CalendarEvent[] = [
 const SchoolCalendar = ({ type = "student" }: { type?: "student" | "admin" | "teacher" }) => {
   const [activeTerm, setActiveTerm] = useState("Term 1");
 
+  const handleDownloadPDF = () => {
+    window.print();
+  };
+
   // Sort events by date
   const sortedEvents = [...calendarEvents].sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
 
-  const getBadgeColor = (type: string) => {
-    switch (type) {
-      case "term": return "bg-primary/20 text-primary border-primary/30";
-      case "holiday": return "bg-orange-500/20 text-orange-600 border-orange-500/30";
-      case "exam": return "bg-red-500/20 text-red-600 border-red-500/30";
-      default: return "bg-blue-500/20 text-blue-600 border-blue-500/30";
+  const getBadgeVariant = (type: string) => {
+    switch(type) {
+      case "term": return "default";
+      case "holiday": return "secondary";
+      case "exam": return "destructive";
+      default: return "outline";
     }
-  };
-
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString("en-ZW", { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  };
-
-  const isUpcoming = (dateStr: string) => {
-    return new Date(dateStr) > new Date();
   };
 
   return (
     <DashboardLayout type={type} title="School Calendar">
-      <div className="grid md:grid-cols-4 gap-6">
-        {/* Left: Ministry Info */}
-        <div className="md:col-span-1 space-y-6">
-          <Card className="border-border bg-primary/5">
-            <CardHeader className="pb-3">
-              <Landmark className="w-8 h-8 text-primary mb-2" />
-              <CardTitle className="text-sm font-heading">Ministry Compliance</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                This calendar follows the official 2026 schedule set by the **Ministry of Primary and Secondary Education, Zimbabwe**.
-              </p>
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                  <Badge variant="outline" className="bg-green-500/10 text-green-600 border-green-500/20">Verified</Badge>
-                  <span>2026 Schedule</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+      <div className="flex justify-end mb-4 no-print">
+        <Button onClick={handleDownloadPDF} variant="outline" className="gap-2 bg-card border-border hover:bg-muted font-bold text-xs">
+          <Printer className="w-4 h-4" /> Download Calendar (PDF)
+        </Button>
+      </div>
 
-          <Card className="border-border">
-            <CardHeader><CardTitle className="text-xs font-heading">Key Dates</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-start gap-3">
-                <Bell className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                <div className="text-xs">
-                  <span className="font-bold">Term 1 Closure</span>
-                  <p className="text-muted-foreground italic">April 9, 2026</p>
+      <div className="print-only text-center mb-10 border-b pb-6">
+        <h1 className="text-3xl font-black font-heading text-primary uppercase tracking-widest">CABS Primary School</h1>
+        <p className="text-sm font-bold opacity-60">Official Academic Calendar — 2026</p>
+      </div>
+
+      <div className="space-y-6">
+        <div className="grid gap-6">
+          {sortedEvents.map((event) => (
+            <Card key={event.id} className="border-border overflow-hidden group hover:shadow-md transition-shadow">
+              <div className="flex flex-col md:flex-row">
+                <div className="bg-primary/5 p-6 flex flex-col items-center justify-center min-w-[140px] border-r border-border/50">
+                  <span className="text-2xl font-black text-primary">{new Date(event.startDate).getDate()}</span>
+                  <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                    {new Date(event.startDate).toLocaleString('default', { month: 'short' })}
+                  </span>
+                  <span className="mt-2">
+                    <CalendarIcon className="w-4 h-4 text-primary/40" />
+                  </span>
+                </div>
+                <div className="p-6 flex-1">
+                  <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
+                    <div>
+                      <Badge variant={getBadgeVariant(event.type)} className="mb-2 uppercase text-[10px] tracking-tighter">
+                        {event.type}
+                      </Badge>
+                      <h3 className="text-lg font-black font-heading text-foreground group-hover:text-primary transition-colors">
+                        {event.title}
+                      </h3>
+                    </div>
+                    {event.endDate && (
+                      <Badge variant="outline" className="bg-muted/50">
+                        Until {new Date(event.endDate).toLocaleDateString()}
+                      </Badge>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+                    {event.description}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-4 text-xs font-bold text-muted-foreground/60">
+                    <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> School Grounds</span>
+                    <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> 08:00 AM</span>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                <div className="text-xs">
-                  <span className="font-bold">Independence Day</span>
-                  <p className="text-muted-foreground italic">April 18, 2026</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            </Card>
+          ))}
         </div>
 
-        {/* Right: Events Timeline */}
-        <div className="md:col-span-3">
-          <Card className="border-border">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="font-heading">Academic Timeline 2026</CardTitle>
-              <div className="flex gap-2">
-                <Badge className="bg-primary">2026</Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="relative border-l-2 border-muted ml-3 pl-8 space-y-8 py-4">
-                {sortedEvents.map((event) => (
-                  <div key={event.id} className="relative group">
-                    {/* Timeline Dot */}
-                    <div className={`absolute -left-[41px] top-1 w-6 h-6 rounded-full border-4 border-background flex items-center justify-center transition-transform group-hover:scale-125 ${
-                      event.type === 'term' ? 'bg-primary' : 
-                      event.type === 'exam' ? 'bg-red-500' : 
-                      event.type === 'holiday' ? 'bg-orange-500' : 'bg-blue-500'
-                    }`} />
-                    
-                    <div className={`p-4 rounded-xl border border-border transition-all hover:shadow-md ${isUpcoming(event.startDate) ? 'bg-background' : 'bg-muted/30 opacity-70'}`}>
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                        <div className="flex items-center gap-2">
-                          <Badge className={getBadgeColor(event.type)}>{event.type.toUpperCase()}</Badge>
-                          <h4 className="font-heading font-bold text-foreground">{event.title}</h4>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
-                          <Clock className="w-3.5 h-3.5" />
-                          {formatDate(event.startDate)}
-                          {event.endDate && ` — ${formatDate(event.endDate)}`}
-                        </div>
-                      </div>
-                      <p className="text-sm text-muted-foreground">{event.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <div className="mt-12 p-8 bg-primary/5 rounded-3xl border border-primary/20 relative overflow-hidden no-print">
+            <Landmark className="absolute -right-10 -bottom-10 w-64 h-64 text-primary/5 rotate-12" />
+            <div className="relative z-10">
+                <div className="flex items-center gap-2 mb-4 text-primary">
+                    <Bell className="w-6 h-6" />
+                    <h3 className="text-xl font-black font-heading">Calendar Note</h3>
+                </div>
+                <p className="text-sm text-foreground/80 leading-relaxed max-w-xl">
+                    This calendar is subject to change based on Ministry of Primary and Secondary Education directives. 
+                    Please ensure you are subscribed to our WhatsApp bot for real-time updates.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                    <Badge className="bg-primary text-white hover:bg-primary font-bold">2026 Session</Badge>
+                    <Badge variant="outline" className="border-primary/30 text-primary font-bold">Ministry Approved</Badge>
+                </div>
+            </div>
         </div>
       </div>
     </DashboardLayout>
